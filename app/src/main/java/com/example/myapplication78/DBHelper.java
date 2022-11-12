@@ -17,13 +17,23 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    public SQLiteDatabase getWritableDatabase() {
+        return super.getWritableDatabase();
+    }
+
+    @Override
+    public SQLiteDatabase getReadableDatabase() {
+        return super.getReadableDatabase();
+    }
+
+    @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create Table ListView(name TEXT primary key, description Text, price Text )");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int ii) {
-        sqLiteDatabase.execSQL("drop Table if exists Userdetails");
+        sqLiteDatabase.execSQL("drop Table if exists ListView");
     }
 
     public Boolean insertuserdata(String name, String description, String price){
@@ -32,7 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("name",name);
         contentValues.put("description",description);
         contentValues.put("price",price);
-        long result = sqLiteDatabase.insert("Userdetails",null,contentValues);
+        long result = sqLiteDatabase.insert("ListView",null,contentValues);
         if (result==-1){
             return false;
         } else

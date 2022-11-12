@@ -63,13 +63,14 @@
         android:textSize="16dp"
         android:layout_below="@id/btnupdate"
         android:layout_marginTop="20dp"/>
+
     <Button
         android:id="@+id/btnview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Data"
-        android:textSize="16dp"
         android:layout_below="@id/btndelete"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="17dp"
+        android:text="View Data"
+        android:textSize="16dp" />
 
 </RelativeLayout>

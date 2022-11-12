@@ -28,7 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
         DB = new DBHelper(this);
 
-        view.setOnClickListener(view -> startActivity(new Intent(MainActivity.this,Userlist.class)));
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,Userlist.class));
+            }
+        });
 
         insert.setOnClickListener(view -> {
             String nameTXT = name.getText().toString();
