@@ -18,7 +18,7 @@
             android:name=".DBHelper"
             android:exported="false" />
         <activity
-            android:name=".Userlist"
+            android:name=".userlist"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

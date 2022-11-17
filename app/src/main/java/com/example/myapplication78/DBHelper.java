@@ -11,6 +11,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 
 public class DBHelper extends SQLiteOpenHelper {
+    public static final String Col1 = "Name";
+    public static final String Col2 = "Description";
+    public static final String Col3 = "Price";
+
+
 
     public DBHelper( Context context) {
         super(context, "vithu", null, 1);
@@ -53,7 +58,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getdata(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("Select * from Userdetails", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("Select * from ListView", null);
         return cursor;
     }
 }
