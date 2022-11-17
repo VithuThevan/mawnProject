@@ -56,8 +56,14 @@ public class userlist extends AppCompatActivity {
         if (cursor.getCount()==0){
             Toast.makeText(userlist.this, "No Entry Exists", Toast.LENGTH_SHORT).show();
         }else{
-            Name.add(cursor.getString(0));
-            Description.add(cursor.getString(1));
-            Price.add(cursor.getString(2));
+            if (cursor .moveToFirst()) {
+                do {
+                    Name.add(cursor.getString(0));
+                    Description.add(cursor.getString(1));
+                    Price.add(cursor.getString(2));
+                } while (cursor .moveToNext());
+            }
+            cursor .close();
+
     }
 }}
