@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     EditText name, description, price;
-    Button insert, update, delete, view;
+    Button insert, update, delete, view, add;
     DBHelper DB;
     boolean isAllFieldsChecked = false;
     @Override
@@ -30,13 +30,22 @@ public class MainActivity extends AppCompatActivity {
         delete = findViewById(R.id.btndelete);
         view = findViewById(R.id.btnview);
 
+
         DB = new DBHelper(this);
 
         price.addTextChangedListener(onTextChangedListener());
 
         //to redirect page to list view upon clicking view and update button
+        update.setOnClickListener(view -> {
+            boolean isUpdate = DB.updateData(name.getText().toString(),description.getText().toString(),price.getText().toString());
+            if (isUpdate){
+                Toast.makeText(MainActivity.this, "Entry Updated", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(MainActivity.this, "Entry not Updated", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         view.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, userlist.class)));
-        update.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, userlist.class)));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         delete.setOnClickListener(view -> {
@@ -44,7 +53,12 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-//                            int result = DB.deleteStudent()
+                            Integer deletedRows = DB.deletedata(name.getText().toString());
+                            if (deletedRows>0){
+                                Toast.makeText(MainActivity.this, "Entry Deleted", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(MainActivity.this, "Entry not Deleted", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {

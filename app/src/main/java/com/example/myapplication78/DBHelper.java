@@ -14,8 +14,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String Col1 = "Name";
     public static final String Col2 = "Description";
     public static final String Col3 = "Price";
-
-
+    public static final String Col4 = "Id";
+    public static final String TableName = "ListView";
 
     public DBHelper( Context context) {
         super(context, "vithu", null, 1);
@@ -33,12 +33,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create Table ListView(name TEXT primary key, description Text, price Text )");
+        sqLiteDatabase.execSQL("create Table "+TableName+"(Id Integer primary key autoincrement, name TEXT primary key, description Text, price Text )");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int ii) {
-        sqLiteDatabase.execSQL("drop Table if exists ListView");
+        sqLiteDatabase.execSQL("drop Table if exists "+TableName);
     }
 
     public Boolean insertuserdata(String name, String description, String price){
@@ -47,7 +47,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("name",name);
         contentValues.put("description",description);
         contentValues.put("price",price);
-        long result = sqLiteDatabase.insert("ListView",null,contentValues);
+        long result = sqLiteDatabase.insert(TableName,null,contentValues);
         if (result==-1){
             return false;
         } else
@@ -58,7 +58,23 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getdata(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("Select * from ListView", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + TableName, null);
         return cursor;
+    }
+
+    public boolean updateData(String name, String description, String price){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name",name);
+        contentValues.put("description",description);
+        contentValues.put("price",price);
+        db.update(TableName,contentValues,"name=?",new String[] {name});
+        return true;
+
+    }
+
+    public Integer deletedata (String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TableName, "name=?",new String[] {name});
     }
 }
