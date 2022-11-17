@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
+
     EditText name, description, price;
     Button insert, update, delete, view;
     FloatingActionButton add;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Entry not Updated", Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
         //redirect to view page to see all the records updated
         view.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, userlist.class)));
@@ -164,4 +167,5 @@ public class MainActivity extends AppCompatActivity {
         // after all validation return true.
         return true;
     }
+
 }
