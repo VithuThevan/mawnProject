@@ -34,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
         insert = findViewById(R.id.btninsert);
         update = findViewById(R.id.btnupdate);
         delete = findViewById(R.id.btndelete);
-        view = findViewById(R.id.btnview);
+        //view = findViewById(R.id.btnview);
         add = (FloatingActionButton) findViewById(R.id.fab);
+
+        update.setVisibility(View.GONE);
+        delete.setVisibility(View.GONE);
 
         DB = new DBHelper(this);
 
@@ -47,15 +50,14 @@ public class MainActivity extends AppCompatActivity {
             boolean isUpdate = DB.updateData(name.getText().toString(), description.getText().toString(), price.getText().toString());
             if (isUpdate) {
                 Toast.makeText(MainActivity.this, "Entry Updated", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, userlist.class));
             } else {
                 Toast.makeText(MainActivity.this, "Entry not Updated", Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
         //redirect to view page to see all the records updated
-        view.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, userlist.class)));
+        //view.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, userlist.class)));
 
         //to show an alert message before deleting
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             Boolean checkinsertdata = DB.insertuserdata(nameTXT, descriptionTXT, priceTXT);
             if (checkinsertdata) {
                 Toast.makeText(MainActivity.this, "New Entry Inserted", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, userlist.class));
             } else {
                 Toast.makeText(MainActivity.this, "New Entry Not Inserted", Toast.LENGTH_SHORT).show();
             }

@@ -21,7 +21,7 @@ public class userlist extends AppCompatActivity {
     DBHelper DB;
     MyAdapter adapter;
     FloatingActionButton add;
-    Button Update, Delete;
+    Button Update, Delete,edit,insert;
     MainActivity Main;
 
     @Override
@@ -36,8 +36,10 @@ public class userlist extends AppCompatActivity {
         Price = new ArrayList<>();
         add = (FloatingActionButton) findViewById(R.id.fab);
 
+        edit = (Button) findViewById(R.id.btnedit);
         Update = (Button) findViewById(R.id.btnupdate);
         Delete = (Button) findViewById(R.id.btndelete);
+        insert = (Button) findViewById(R.id.btninsert);
 
         recyclerView = findViewById(R.id.recyclerview);
         adapter = new MyAdapter(this,Name,Description,Price);
@@ -49,8 +51,13 @@ public class userlist extends AppCompatActivity {
         //hiding the update and view buttons and changing it to fill the form
         add.setOnClickListener(view -> {
             startActivity(new Intent(userlist.this, MainActivity.class));
+        });
+
+        edit.setOnClickListener(view -> {
+            startActivity(new Intent(userlist.this, MainActivity.class));
             Update.setVisibility(View.GONE);
             Delete.setVisibility(View.GONE);
+            insert.setVisibility(View.VISIBLE);
         });
     }
 
