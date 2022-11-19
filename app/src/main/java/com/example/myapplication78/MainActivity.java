@@ -3,7 +3,6 @@ package com.example.myapplication78;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,7 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
 
     EditText name, description, price;
-    Button insert, update, delete, view;
+    Button insert, update, delete;
+    Button view;
     FloatingActionButton add;
     DBHelper DB;
     boolean isAllFieldsChecked = false;
@@ -34,11 +34,12 @@ public class MainActivity extends AppCompatActivity {
         insert = findViewById(R.id.btninsert);
         update = findViewById(R.id.btnupdate);
         delete = findViewById(R.id.btndelete);
-        //view = findViewById(R.id.btnview);
+       // view = findViewById(R.id.btnview);
         add = (FloatingActionButton) findViewById(R.id.fab);
 
         update.setVisibility(View.GONE);
         delete.setVisibility(View.GONE);
+
 
         DB = new DBHelper(this);
 
@@ -57,30 +58,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //redirect to view page to see all the records updated
-        //view.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, userlist.class)));
+//        view.setOnClickListener(view -> {
+//            System.out.println("Working 1...........");
+//                startActivity(new Intent(MainActivity.this, userlist.class));
+//        });
 
         //to show an alert message before deleting
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        delete.setOnClickListener(view -> {
-            builder.setTitle("Warning").setMessage("Do you want to delete this Item? This action cannot be undone").setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Integer deletedRows = DB.deletedata(name.getText().toString());
-                            if (deletedRows > 0) {
-                                Toast.makeText(MainActivity.this, "Entry Deleted", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(MainActivity.this, "Entry not Deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                        }
-                    }).show();
-        });
+        delete.setOnClickListener(view -> builder.setTitle("Warning").setMessage("Do you want to delete this Item? This action cannot be undone").setCancelable(false)
+                .setPositiveButton("Yes", (dialogInterface, i) -> {
+                    Integer deletedRows = DB.deletedata(name.getText().toString());
+                    if (deletedRows > 0) {
+                        Toast.makeText(MainActivity.this, "Entry Deleted", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, userlist.class));
+                    } else {
+                        Toast.makeText(MainActivity.this, "Entry not Deleted", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.cancel()).show());
 
         //adding details to database
         insert.setOnClickListener(view -> {
@@ -135,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         char t;
         while (i < max) {
             t = str.charAt(i);
-            if (t != '.' && after == false) {
+            if (t != '.' && !after) {
             } else if (t == '.') {
                 after = true;
             } else {

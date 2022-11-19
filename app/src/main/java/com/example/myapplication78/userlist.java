@@ -22,12 +22,13 @@ public class userlist extends AppCompatActivity {
     MyAdapter adapter;
     FloatingActionButton add;
     Button Update, Delete,edit,insert;
-    MainActivity Main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userlist);
+        setContentView(R.layout.activity_main);
+        setContentView(R.layout.userentry);
 
         DB = new DBHelper(this);
 
@@ -46,24 +47,24 @@ public class userlist extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        displaydata();
 
+        displaydata();
         //hiding the update and view buttons and changing it to fill the form
-        add.setOnClickListener(view -> {
-            startActivity(new Intent(userlist.this, MainActivity.class));
-        });
+        add.setOnClickListener(view -> startActivity(new Intent(userlist.this, MainActivity.class)));
 
         edit.setOnClickListener(view -> {
             startActivity(new Intent(userlist.this, MainActivity.class));
-            Update.setVisibility(View.GONE);
-            Delete.setVisibility(View.GONE);
-            insert.setVisibility(View.VISIBLE);
+            Update.setVisibility(View.VISIBLE);
+            Delete.setVisibility(View.VISIBLE);
+            insert.setVisibility(View.GONE);
         });
     }
 
     //the method to show all the details in card
     private void displaydata() {
         Cursor cursor = DB.getdata();
+        System.out.print(cursor);
+        System.out.print("working2 ......");
         if (cursor.getCount()==0){
             Toast.makeText(userlist.this, "No Entry Exists", Toast.LENGTH_SHORT).show();
         }else{
@@ -74,6 +75,7 @@ public class userlist extends AppCompatActivity {
                     Price.add(cursor.getString(2));
                 } while (cursor .moveToNext());
             }
-            cursor .close();
+            cursor.close();
     }
+        System.out.print("working3 ......");
 }}

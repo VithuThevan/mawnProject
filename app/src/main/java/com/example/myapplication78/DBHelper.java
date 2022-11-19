@@ -1,20 +1,12 @@
 package com.example.myapplication78;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Bundle;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public static final String Col1 = "Name";
-    public static final String Col2 = "Description";
-    public static final String Col3 = "Price";
-    public static final String Col4 = "Id";
     public static final String TableName = "ListView";
 
     public DBHelper( Context context) {
@@ -48,18 +40,12 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("description",description);
         contentValues.put("price",price);
         long result = sqLiteDatabase.insert(TableName,null,contentValues);
-        if (result==-1){
-            return false;
-        } else
-        {
-            return true;
-        }
+        return result != -1;
     }
 
     public Cursor getdata(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("Select * from " + TableName, null);
-        return cursor;
+        return sqLiteDatabase.rawQuery("Select * from " + TableName, null);
     }
 
     public boolean updateData(String name, String description, String price){
